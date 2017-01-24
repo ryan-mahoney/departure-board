@@ -11,17 +11,22 @@ const dateFormat = (seconds) => {
 module.exports = (data) => {
 
     // get an array of table-row strings
-    const rows = data.map((record) => {
-        return `
-            <tr>
-                <td>MBTA</td>
-                <td>${dateFormat(parseInt(record.ScheduledTime) + parseInt(record.Lateness))}</td>
-                <td>${record.Destination}</td>
-                <td>${record.Track}</td>
-                <td>${record.Status}</td>
-            </tr>
-        `;
-    });
+    const rows = data.
+        sort((a, b) => (
+            (parseInt(a.ScheduledTime) + parseInt(a.Lateness)) -
+            (parseInt(b.ScheduledTime) + parseInt(b.Lateness))
+        )).
+        map((record) => {
+            return `
+                <tr>
+                    <td>MBTA</td>
+                    <td>${dateFormat(parseInt(record.ScheduledTime) + parseInt(record.Lateness))}</td>
+                    <td>${record.Destination}</td>
+                    <td>${record.Track}</td>
+                    <td>${record.Status}</td>
+                </tr>
+            `;
+        });
 
     // return the page with the table-rows merged in
     return `<!DOCTYPE html>
