@@ -1,1 +1,1 @@
-# departure-board
+# Departure Board Sample App
